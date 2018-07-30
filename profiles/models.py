@@ -10,6 +10,9 @@ class Profile(models.Model):
     profile_photo = models.ImageField(blank=True, null=True)
     bio = models.TextField(max_length=200, blank=True)
 
+    def __str__(self):
+        return self.id
+
 
 def create_user_profile(sender, **kwargs):
     if kwargs['created']:
