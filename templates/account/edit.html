@@ -4,8 +4,7 @@
 
     <form  action="{%url 'home'%}" method="post" enctype="multipart/form-data">
         {%csrf_token%}
-
-        {% bootstrap_form profile_form%}
+        {{ profile_form }}
         <input type="submit" class="btn btn-success btn-lg" value="Post">
     </form>
 

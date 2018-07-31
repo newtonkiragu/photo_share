@@ -3,6 +3,10 @@ from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm
 
 
+def home(request):
+    return render(request, 'home.html')
+
+
 @login_required(login_url='/accounts/login/')
 def edit_account(request):
     if request.method == 'POST':
