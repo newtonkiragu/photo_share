@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .forms import ProfileForm
 from uploads.forms import ImageForm
+from uploads.models import Image
+from .forms import ProfileForm
+
 
 
 def home(request):
@@ -32,4 +34,5 @@ def account_edit(request):
 @login_required(login_url='/accounts/login/')
 def account_profile(request):
     user = request.user
-    return render(request, 'account/profile.html', {"user": user})
+    images = Image.objects.filter(user=request.user)
+    return render(request, 'account/profile.html', {"user": user, "images": images})
