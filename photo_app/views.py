@@ -1,9 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from uploads.forms import ImageForm
-from uploads.models import Image
-from .forms import ProfileForm
-
+from .models import Image
+from .forms import ProfileForm, ImageForm
 
 
 def home(request):
