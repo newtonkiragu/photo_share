@@ -11,7 +11,7 @@ class Profile(models.Model):
     bio = models.TextField(max_length=200, blank=True)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 def create_user_profile(sender, **kwargs):
