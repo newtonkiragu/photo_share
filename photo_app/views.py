@@ -13,6 +13,7 @@ def home(request):
     return render(request, 'home.html', {"images": images, "comments": comments})
 
 
+@login_required
 def image_comment(request, id):
     image = Image.objects.get(id=id)
     comments = Comment.objects.filter(image_id=id)
@@ -29,6 +30,7 @@ def image_comment(request, id):
     return render(request, 'comment.html',{"image": image, "form": form, "comments": comments})
 
 
+@login_required
 def image_post(request):
 
     if request.method == 'POST':
@@ -43,7 +45,7 @@ def image_post(request):
     return render(request, 'image_post.html', {"image_form": image_form})
 
 
-@login_required(login_url='/accounts/login/')
+@login_required
 def account_edit(request):
     if request.method == 'POST':
         profile_form = ProfileForm(request.POST, request.FILES)
@@ -57,14 +59,15 @@ def account_edit(request):
     return render(request, 'account/edit.html', {"profile_form": profile_form})
 
 
-@login_required(login_url='/accounts/login/')
+@login_required
 def account_profile(request):
     user = request.user
     followers = Follow.objects.followers(request.user)
     following = Follow.objects.following(request.user)
+    images = Image.objects.filter(poster=user)
     followers_number = len(followers)
     following_number = len(following)
-    images = Image.objects.filter(poster=user)
+    images_number = len(images)
     comments = Comment.objects.all()
 
     if request.method == 'POST':
@@ -79,16 +82,18 @@ def account_profile(request):
 
     return render(request, 'account/profile.html', {"user": user, "images": images, "followers": followers,
                                                     "following": following, "followers_number": followers_number,
-                                                    "following_number": following_number, "form": form, "comments":comments})
+                                                    "following_number": following_number, "form": form,
+                                                    "comments":comments, "images_number": images_number})
 
 
 def user_profile(request, username):
     user = User.objects.get(username=username)
     followers = Follow.objects.followers(user)
     following = Follow.objects.following(user)
+    images = Image.objects.filter(poster=user)
     followers_number = len(followers)
     following_number = len(following)
-    images = Image.objects.filter(poster=user)
+    images_number = len(images)
     comments = Comment.objects.all()
 
     if request.method == 'POST':
@@ -103,7 +108,8 @@ def user_profile(request, username):
 
     return render(request, 'account/profile.html', {"user": user, "images": images, "followers": followers,
                                                     "following": following, "followers_number": followers_number,
-                                                    "following_number": following_number, "form": form, "comments": comments})
+                                                    "following_number": following_number, "form": form,
+                                                    "comments": comments, "images_number": images_number})
 
 
 @login_required(login_url='/accounts/login/')

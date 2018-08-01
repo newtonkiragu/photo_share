@@ -25,9 +25,9 @@
                         <a class="btn btn-outline-secondary btn-sm" href="{% url 'account_edit' %}">Edit Profile</a>
                     {% else %}
                         {% if request.user in followers %}
-                            <a class="btn btn-primary btn-sm" href="{% url 'follow_user' username=user.username %}">UnFollow</a>
+                            <a class="btn btn-primary btn-sm" href="{% url 'unfollow_user' username=user.username %}">UnFollow</a>
                         {% else %}
-                            <a class="btn btn-primary btn-sm" href="{% url 'unfollow_user' username=user.username %}">Follow</a>
+                            <a class="btn btn-primary btn-sm" href="{% url 'follow_user' username=user.username %}">Follow</a>
                         {% endif %}
                     {% endif %}
 

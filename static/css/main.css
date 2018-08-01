@@ -16,7 +16,7 @@ nav img{
     margin: auto;
 }
 .profile_header img{
-    height: 200px;
+    max-height: 200px;
     width: auto;
     border-radius: 100%;
 }
