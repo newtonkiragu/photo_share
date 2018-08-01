@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'friendship',
+    'fontawesome',
 ]
 
 SITE_ID = 1

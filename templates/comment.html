@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+    <div class="container inner-container">
+
+
+        <div class="comment-card row">
+            <div class="col-6">
+                <img src="{{ image.poster.profile.profile_photo.url }}" class="comment-img"><b>{{ image.poster.username }}</b>
+                <img src="{{ image.image.url }}" alt="" class="img-fluid card-img-top">
+                <p><b>Image Name:</b> {{ image.image_name }}</p>
+                <p><b>Image Caption:</b></p>
+                <p>{{ image.image_caption }}</p>
+
+            </div>
+
+            <div class="col-6">
+
+                <form  action="{%url 'image_comment' id=image.id %}" method="post" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    {% bootstrap_form form %}
+                    <input type="submit" class="btn btn-success btn-lg" value="Comment">
+                </form>
+
+                {% for comment in comments %}
+                    {% if comment.commenter.profile.profile_photo %}
+                        <img src="{{ comment.commenter.profile.profile_photo.url }}">
+                    {% endif %}<b>{{ comment.commenter.username }}</b>
+                    <p>{{ comment.text }}</p>
+                {% endfor %}
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+{% endblock content %}

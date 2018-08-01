@@ -7,5 +7,7 @@ urlpatterns = [
     path('accounts/profile/', views.account_profile, name='account_profile'),
     path('<username>/', views.user_profile, name='user_profile'),
     path('follow/<username>/', views.follow_user, name='follow_user'),
+    path('unfollow/<username>/', views.unfollow_user, name='unfollow_user'),
     path('image/post/', views.image_post, name='image_post'),
+    path('image/comment/<id>/', views.image_comment, name='image_comment'),
 ]

@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load bootstrap4 %}
+{% load fontawesome %}
 
 {% block content %}
 
@@ -22,7 +24,11 @@
                     {% if user.username == request.user.username %}
                         <a class="btn btn-outline-secondary btn-sm" href="{% url 'account_edit' %}">Edit Profile</a>
                     {% else %}
-                        <a class="btn btn-primary btn-sm" href="">Follow</a>
+                        {% if request.user in followers %}
+                            <a class="btn btn-primary btn-sm" href="{% url 'follow_user' username=user.username %}">UnFollow</a>
+                        {% else %}
+                            <a class="btn btn-primary btn-sm" href="{% url 'unfollow_user' username=user.username %}">Follow</a>
+                        {% endif %}
                     {% endif %}
 
                     <div class="row">
@@ -62,9 +68,20 @@
                     <img src="{{ image.image.url }}" class="img-fluid">
                 </div>
                 <div class="col-4 image-details">
-                    <p>{{ image.poster.username }}</p>
-                    <p>{{ image.image_name }}</p>
+                    <img src="{{ user.profile.profile_photo.url }}" class="comment-img"><b>{{ image.poster.username }}</b>
+                    <p><b>Image Name:</b> {{ image.image_name }}</p>
+                    <p><b>Image Caption:</b></p>
                     <p>{{ image.image_caption }}</p>
+
+                    {% for comment in comments %}
+                        {% if comment.image_id == image.id %}
+                            {% if comment.commenter.profile.profile_photo %}
+                                <img src="{{ comment.commenter.profile.profile_photo.url }}" class="comment-img">
+                            {% endif %}<b>{{ comment.commenter.username }}</b>
+                            <p>{{ comment.text }}</p>
+                        {% endif %}
+                    {% endfor %}
+
                 </div>
 
             </div>

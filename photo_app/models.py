@@ -22,7 +22,7 @@ class Image(models.Model):
     poster = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
     def save_image(self):
         self.save()
@@ -44,3 +44,9 @@ def create_user_profile(sender, **kwargs):
 
 
 post_save.connect(create_user_profile, sender=User)
+
+
+class Comment(models.Model):
+    text = models.TextField()
+    image = models.ForeignKey(Image, on_delete=models.CASCADE)
+    commenter = models.ForeignKey(User, on_delete=models.CASCADE)

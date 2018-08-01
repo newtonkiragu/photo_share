@@ -3,16 +3,23 @@
 
 {% block navbar %}
 
-    <nav class="navbar navbar-expand-md navbar-light">
+    <nav class="navbar navbar-expand-md navbar-light d-flex justify-content-between">
         <a class="navbar-brand" href="/">
-            <img src="{% static 'images/gram_logo.png' %}"> Photogram
+            <img src="{% static 'images/gram_logo.png' %}"> Photoshare
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
+
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <form class="form-inline my-2">
+              <input class="form-control" type="text" placeholder=Search required>
+            </form>
+
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'image_post' %}">
@@ -24,6 +31,13 @@
                         <img src="{% static 'images/profile.png' %}">
                     </a>
                 </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'account_logout' %}">
+                            <img src="{% static 'images/logout.png' %}">
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </nav>

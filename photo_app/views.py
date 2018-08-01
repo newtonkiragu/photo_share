@@ -1,15 +1,32 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from friendship.models import Follow
-from .models import Image
-from .forms import ProfileForm, ImageForm
+from .models import Image, Comment
+from .forms import ProfileForm, ImageForm, CommentForm
 
 
 def home(request):
+    images = Image.objects.all()
+    comments = Comment.objects.all()
+    return render(request, 'home.html', {"images": images, "comments": comments})
 
-    return render(request, 'home.html',)
+
+def image_comment(request, id):
+    image = Image.objects.get(id=id)
+    comments = Comment.objects.filter(image_id=id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.commenter = request.user
+            comment.image_id = image.id
+            comment.save()
+            messages.success(request, 'Your comment has been posted.')
+    else:
+        form = CommentForm()
+    return render(request, 'comment.html',{"image": image, "form": form, "comments": comments})
 
 
 def image_post(request):
@@ -44,23 +61,60 @@ def account_edit(request):
 def account_profile(request):
     user = request.user
     followers = Follow.objects.followers(request.user)
-    following = Follow.objects.followers(request.user)
+    following = Follow.objects.following(request.user)
     followers_number = len(followers)
     following_number = len(following)
     images = Image.objects.filter(poster=user)
+    comments = Comment.objects.all()
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.commenter = request.user
+            comment.save()
+            messages.success(request, 'Your comment has been posted.')
+    else:
+        form = CommentForm()
+
     return render(request, 'account/profile.html', {"user": user, "images": images, "followers": followers,
                                                     "following": following, "followers_number": followers_number,
-                                                    "following_number": following_number})
+                                                    "following_number": following_number, "form": form, "comments":comments})
 
 
 def user_profile(request, username):
     user = User.objects.get(username=username)
+    followers = Follow.objects.followers(user)
+    following = Follow.objects.following(user)
+    followers_number = len(followers)
+    following_number = len(following)
     images = Image.objects.filter(poster=user)
-    return render(request, 'account/profile.html', {"user": user, "images": images})
+    comments = Comment.objects.all()
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.commenter = request.user
+            comment.save()
+            messages.success(request, 'Your comment has been posted.')
+    else:
+        form = CommentForm()
+
+    return render(request, 'account/profile.html', {"user": user, "images": images, "followers": followers,
+                                                    "following": following, "followers_number": followers_number,
+                                                    "following_number": following_number, "form": form, "comments": comments})
 
 
 @login_required(login_url='/accounts/login/')
 def follow_user(request, username):
     other_user = User.objects.get(username=username)
     Follow.objects.add_follower(request.user, other_user)
-    return render(request, '')
+    return redirect('user_profile', username=username)
+
+
+@login_required(login_url='/accounts/login/')
+def unfollow_user(request, username):
+    other_user = User.objects.get(username=username)
+    Follow.objects.remove_follower(request.user, other_user)
+    return redirect('user_profile', username=username)

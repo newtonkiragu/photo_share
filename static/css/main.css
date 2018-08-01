@@ -46,3 +46,28 @@ nav img{
 .modal-dialog .col-4{
     margin: 0;
 }
+.image-details{
+    padding: 10px
+}
+.comment-img{
+    margin: 10px;
+    height: 30px;
+    width: auto;
+    border-radius: 100%;
+}
+.img-card{
+    max-width: 600px;
+    margin: 20px;
+}
+.forms{
+    max-width: 350px;
+    margin: 15px auto;
+    background-color: #ffffff;
+    padding: 30px;
+}
+nav form{
+    margin: auto;
+}
+.comment-card{
+    background-color: white;
+}

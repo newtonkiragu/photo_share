@@ -1,8 +1,43 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
 
 {% block content %}
 
+    <div class="inner-container">
 
+        {% for image in images %}
+
+            <div class="card img-card">
+                <div class="card-header">
+                    <a href="{% url 'user_profile' username=image.poster.username %}">
+                        <img src="{{ image.poster.profile.profile_photo.url }}" class="comment-img"><b>{{ image.poster.username }}</b>
+                    </a>
+                </div>
+                <img src="{{ image.image.url }}" alt="" class="img-fluid card-img-top">
+                <div class="card-body">
+
+                    <p><b>Image Name:</b> {{ image.image_name }}</p>
+                    <p><b>Image Caption:</b></p>
+                    <p>{{ image.image_caption }}</p>
+
+                    {% for comment in comments %}
+                        {% if comment.image == image %}
+                            <a href="{% url 'user_profile' username=comment.commenter.username %}">
+                            {% if comment.commenter.profile.profile_photo %}
+                                <img src="{{ comment.commenter.profile.profile_photo.url }}">
+                            {% endif %}<b>{{ comment.commenter.username }}</b>
+                            </a>
+                            <p>{{ comment.text }}</p>
+                        {% endif %}
+                    {% endfor %}
+
+                    <a class="btn btn-primary" href="{% url 'image_comment' id=image.id %}">Comment</a>
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
 
 
 
