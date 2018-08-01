@@ -7,7 +7,7 @@ from django.db.models.signals import post_save
 class Profile(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_photo = models.ImageField(blank=True, null=True)
+    profile_photo = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
     bio = models.TextField(max_length=200, blank=True)
 
     def __str__(self):
