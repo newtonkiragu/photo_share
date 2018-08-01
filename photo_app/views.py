@@ -27,6 +27,7 @@ def account_edit(request):
             profile = profile_form.save(commit=False)
             profile.user = request.user
             profile.save()
+            messages.success(request, 'Your profile has been updated.')
     else:
         profile_form = ProfileForm()
     return render(request, 'account/edit.html', {"profile_form": profile_form})
