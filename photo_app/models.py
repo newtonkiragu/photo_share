@@ -19,7 +19,7 @@ class Image(models.Model):
     image = models.ImageField(upload_to='images/')
     image_name = models.CharField(max_length=50, blank=True)
     image_caption = models.TextField(blank=True)
-    poster = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
+    poster = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.id

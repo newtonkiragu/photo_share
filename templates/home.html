@@ -5,8 +5,8 @@
 
     <h1>Home</h1>
 
-    <form  action="{%url 'account_profile'%}" method="post" enctype="multipart/form-data">
-        {%csrf_token%}
+    <form  action="{%url 'home'%}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
         {{ image_form }}
         <input type="submit" class="btn btn-success btn-lg" value="Post">
     </form>

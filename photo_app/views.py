@@ -1,16 +1,19 @@
 from django.shortcuts import render
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Image
 from .forms import ProfileForm, ImageForm
 
 
 def home(request):
+
     if request.method == 'POST':
         image_form = ImageForm(request.POST, request.FILES)
         if image_form.is_valid():
             image = image_form.save(commit=False)
-            image.user = request.user
+            image.poster = request.user
             image.save()
+            messages.success(request, 'Your picture has successfully been uploaded.')
     else:
         image_form = ImageForm()
     return render(request, 'home.html', {"image_form": image_form})
