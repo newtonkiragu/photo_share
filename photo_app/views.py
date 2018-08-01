@@ -35,5 +35,5 @@ def account_edit(request):
 @login_required(login_url='/accounts/login/')
 def account_profile(request):
     user = request.user
-    images = Image.objects.filter(user=request.user)
+    images = Image.objects.filter(poster=request.user)
     return render(request, 'account/profile.html', {"user": user, "images": images})
