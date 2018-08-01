@@ -1,8 +1,77 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-    <p>{{ user.username }}</p>
-    {% for image in images %}
-        <img src="{{ image.image.url }}">
+
+    <div class="inner-container">
+        <!-- PROFILE HEADER -->
+        <div class="row profile_header">
+
+            <div class="col-4">
+                {% if user.profile.profile_photo %}
+                    <img src="{{ user.profile.profile_photo.url }}" class="img-fluid">
+                {% else %}
+                    <img src="{% static 'images/profile.png' %}" class="img-fluid">
+                {% endif %}
+            </div>
+
+            <div class="col-8">
+
+                <span class="username">{{ user.username }}</span>
+
+                    {% if user.username == request.user.username %}
+                        <a class="btn btn-outline-secondary btn-sm" href="{% url 'account_edit' %}">Edit Profile</a>
+                    {% else %}
+                        <a class="btn btn-primary btn-sm" href="">Follow</a>
+                    {% endif %}
+
+                    <div class="row">
+                        <span class="col-4"><b>{{ images_number }}</b> posts</span>
+                        <span class="col-4"><b>{{ followers_number }}</b> followers</span>
+                        <span class="col-4"><b>{{ following_number }}</b> following</span>
+                    </div>
+
+            </div>
+
+        </div>
+        <!-- END OF PROFILE HEADER -->
+
+        <hr>
+
+        <div class="gallery">
+            {% for image in images %}
+
+                <div class="img-wrapper">
+                    <img src="{{ image.image.url }}" alt="" class="img-fluid gallery-img"
+                     data-toggle="modal" data-target="#{{ image.id }}">
+                </div>
+
+            {% endfor %}
+        </div>
+
+        {% for image in images %}
+        <!-- Modals -->
+        <div class="modal fade" id="{{ image.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-dialog row" role="document">
+
+                <div class="col-8">
+                    <img src="{{ image.image.url }}" class="img-fluid">
+                </div>
+                <div class="col-4 image-details">
+                    <p>{{ image.poster.username }}</p>
+                    <p>{{ image.image_name }}</p>
+                    <p>{{ image.image_caption }}</p>
+                </div>
+
+            </div>
+        </div>
     {% endfor %}
+
+    </div>
+
+
 {% endblock content %}
