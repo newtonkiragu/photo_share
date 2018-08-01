@@ -1,18 +1,31 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block navbar %}
 
-    <nav>
+    <nav class="navbar navbar-expand-md navbar-light">
+        <a class="navbar-brand" href="/">
+            <img src="{% static 'images/gram_logo.png' %}"> Photogram
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <a href="/">Photoshare</a>
-        {% if user.is_authenticated %}
-            <a href="{% url 'account_email' %}">Change E-mail</a>
-            <a href="{% url 'account_logout' %}">Sign Out</a>
-        {% else %}
-            <a href="{% url 'account_login' %}">Sign In</a>
-            <a href="{% url 'account_signup' %}">Sign Up</a>
-        {% endif %}
-
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'image_post' %}">
+                        <img src="{% static 'images/add.png' %}">
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'account_profile' %}">
+                        <img src="{% static 'images/profile.png' %}">
+                    </a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
 {% endblock navbar %}
