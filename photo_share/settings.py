@@ -156,7 +156,6 @@ STATICFILES_DIRS = [
 ]
 
 
-
 # Location for saving user uploaded media
 
 MEDIA_URL = '/media/'
