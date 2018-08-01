@@ -15,6 +15,8 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     {% endblock styles %}
 
+    <script {% bootstrap_jquery_url %}></script>
+
     {% block extra_head %}
     {% endblock %}
 
@@ -23,23 +25,12 @@
 <body class="container-fluid">
 
 
-    {% block navbar %}
-    {% endblock navbar %}
-
-
     {% block body %}
 
-        {% if messages %}
-            <div>
-                <strong>Messages:</strong>
-                <ul>
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
+        {% block navbar %}
+        {% endblock navbar %}
 
+        {% bootstrap_messages %}
 
         {% block content %}
         {% endblock %}
@@ -52,7 +43,7 @@
 
 
 {% block scripts %}
-    {% bootstrap_javascript %}
+    {% bootstrap_javascript jquery='full' %}
 {% endblock %}
 
 
