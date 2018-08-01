@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
 
 {% block content %}
 
 
-    <form  action="{%url 'post_image'%}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ image_form }}
-        <input type="submit" class="btn btn-success btn-lg" value="Post">
-    </form>
+    <div class="inner-container">
+
+        <form action="{%url 'image_post'%}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {%  bootstrap_form image_form %}
+            <input type="submit" class="btn btn-success btn-lg" value="Post">
+        </form>
+
+    </div>
 
 
 {% endblock content %}
