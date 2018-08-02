@@ -18,3 +18,5 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         exclude = ['commenter', 'image']
+    text = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Add a comment..', 'class': 'form-control'}))
+

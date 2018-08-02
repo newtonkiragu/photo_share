@@ -31,7 +31,12 @@
                         {% endif %}
                     {% endfor %}
 
-                    <a class="btn btn-primary" href="{% url 'image_comment' id=image.id %}">Comment</a>
+                     <form  action="{%url 'image_comment' id=image.id %}" method="post" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        {% bootstrap_form form %}
+                        <input type="submit" class="btn btn-success btn-sm" value="Comment">
+                    </form>
+
                 </div>
             </div>
 

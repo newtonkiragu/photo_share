@@ -10,7 +10,8 @@ from .forms import ProfileForm, ImageForm, CommentForm
 def home(request):
     images = Image.objects.all()
     comments = Comment.objects.all()
-    return render(request, 'home.html', {"images": images, "comments": comments})
+    form = CommentForm()
+    return render(request, 'home.html', {"images": images, "comments": comments, "form": form})
 
 
 @login_required
@@ -27,7 +28,7 @@ def image_comment(request, id):
             messages.success(request, 'Your comment has been posted.')
     else:
         form = CommentForm()
-    return render(request, 'comment.html',{"image": image, "form": form, "comments": comments})
+    return redirect('home')
 
 
 @login_required

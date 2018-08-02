@@ -49,4 +49,4 @@ post_save.connect(create_user_profile, sender=User)
 class Comment(models.Model):
     text = models.TextField()
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
-    commenter = models.ForeignKey(User, on_delete=models.CASCADE)
+    commenter = models.ForeignKey(User, verbose_name="Comment", on_delete=models.CASCADE)
