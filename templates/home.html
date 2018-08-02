@@ -31,11 +31,13 @@
                         {% endif %}
                     {% endfor %}
 
+                    <hr>
                      <form  action="{%url 'image_comment' id=image.id %}" method="post" enctype="multipart/form-data">
                         {%csrf_token%}
-                        {% bootstrap_form form %}
+                        {{ form.text }}
                         <input type="submit" class="btn btn-success btn-sm" value="Comment">
                     </form>
+
 
                 </div>
             </div>
